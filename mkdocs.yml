@@ -1,0 +1,73 @@
+# mkdocs.yml
+# Configuration file for MkDocs (Automated project documentation generator)
+
+site_name: Confusion Matrix Explorer Documentation
+site_url: https://denisecase.github.io/confusion-matrix-explorer/
+repo_url: https://github.com/denisecase/confusion-matrix-explorer
+site_description: Documentation for confusion-matrix-explorer
+site_author: Denise Case
+docs_dir: docs
+site_dir: site
+copyright: Copyright &copy; 2025 Denise Case
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/denisecase/confusion-matrix-explorer
+
+theme:
+  name: material
+  features:
+    - navigation.expand
+    - navigation.sections # Group navigation items
+    - navigation.top # Back-to-top button
+    - search.suggest # Search suggestions as you type
+    - search.highlight # Highlight search terms
+    - content.code.copy # Copy button on code blocks
+    - toc.follow # Highlight current section in TOC
+
+  palette:
+    - scheme: default # Light/dark mode toggle
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true # Include module names
+            show_root_toc_entry: true # Include module in TOC
+            docstring_style: google # Professional docstring format
+            show_signature_annotations: true
+            separate_signature: true # Makes function signatures easier to read
+
+markdown_extensions:
+  - admonition # Note/Warning/Tip boxes
+  - codehilite # Syntax highlighting
+  - tables # Markdown tables
+  - toc:
+      permalink: true # Clickable headers
+      toc_depth: 3
+  - pymdownx.superfences # Code blocks with syntax highlighting
+  - pymdownx.details # Collapsible sections
+  - pymdownx.inlinehilite # Inline code highlighting
+  - pymdownx.snippets # Include external files
+  - pymdownx.tabbed # Tabbed content
+
+nav:
+  - Home: index.md
+  - About: ABOUT.md
+  - Usage: DEVELOPER.md

@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+title: "Confusion Matrix Explorer"
+authors:
+  - family-names: Case
+    given-names: Denise
+    affiliation: Northwest Missouri State University
+    orcid: "0000-0001-6165-7389"
+version: "1.0.0"
+date-released: 2025-11-10
+license: "MIT"
+repository-code: "https://github.com/denisecase/confusion-matrix-explorer"
+abstract: >
+  Interactive app for exploring how changing the decision threshold affects confusion matrix metrics in binary classification.
+  Built with PyShiny, Plotly, and NumPy, this tool helps users visualize the tradeoffs between sensitivity, specificity, and other diagnostic metrics in real time.
+  The code is released under the MIT License.
+
+keywords:
+  - confusion matrix
+  - binary classification
+  - decision threshold
+  - sensitivity
+  - specificity
+  - PyShiny
+  - Plotly
+  - NumPy
+
+preferred-citation:
+  type: software
+  authors:
+    - family-names: Case
+      given-names: Denise
+      affiliation: Northwest Missouri State University
+  title: "Confusion Matrix Explorer"
+  year: 2025
+  version: "1.0.0"
+  doi: 10.5281/zenodo.xxxxxxx  # all versions

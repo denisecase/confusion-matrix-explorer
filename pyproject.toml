@@ -1,0 +1,223 @@
+# pyproject.toml
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=77", "setuptools-scm>=8"]
+
+[project]
+name = "confusion-matrix-explorer" # Package name
+dynamic = ["version"]  # Using setuptools_scm
+description = "Interactive tools for exploring confusion matrices and threshold effects"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [
+    { name="Denise Case", email="dcase@nwmissouri.edu" }
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Education",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Visualization",
+  "Topic :: Education",
+  "Typing :: Typed",
+]
+keywords = [
+  "statistics", "confusion-matrix", "diagnostic-tests",
+  "teaching", "visualization", "machine-learning"
+]
+dependencies = [
+  "pandas",
+  "plotly",
+  "numpy",
+  "shiny",
+  "shinywidgets"          
+]
+
+[project.optional-dependencies]
+dev = [ # Add all to deptry ignores
+  "pre-commit",
+  "pytest",
+  "pytest-cov",
+  "pytest-env",
+  "validate-pyproject",
+]
+docs = [ # Add all to deptry ignores
+  "mkdocs",
+  "mkdocs-gen-files",
+  "mkdocs-git-revision-date-localized-plugin",
+  "mkdocs-include-markdown-plugin",
+  "mkdocs-literate-nav",
+  "mkdocs-material",
+  "mkdocs-static-i18n",
+  "mkdocstrings[python]>=0.18",
+  "ruff", # required for mkdocstrings
+]
+
+[project.urls]
+"Documentation" = "https://denisecase.github.io/confusion-matrix-explorer/latest"
+"Homepage" = "https://github.com/denisecase/confusion-matrix-explorer"
+"Issues" = "https://github.com/denisecase/confusion-matrix-explorer/issues"
+"Source" = "https://github.com/denisecase/confusion-matrix-explorer"
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
+skips = ["B101"] # B101: assert statements
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.paths]
+source = [
+  "src/",
+  "*/site-packages/",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "def __repr__",
+  "if self.debug:",
+  "if settings.DEBUG",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if 0:",
+  "if __name__ == .__main__.:",
+  "class .*\\bProtocol\\):",
+  "@(abc\\.)?abstractmethod",
+  "# pragma: no cover",
+]
+fail_under = 20
+precision = 1
+show_missing = true
+skip_covered = false
+
+[tool.coverage.run]
+branch = true
+omit = [
+  "*/tests/*",
+  "*/test_*",
+  "*/__pycache__/*",
+]
+source = ["src"]
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[tool.deptry]
+known_first_party = ["confusion_matrix_explorer"]
+package_module_name_map = {PyYAML = "yaml"  }
+
+[tool.deptry.per_rule_ignores]
+DEP002 = [
+  # Dev dependencies
+  "pre-commit",
+  "pytest",
+  "pytest-cov",
+  "pytest-env",
+  "validate-pyproject",
+  # Docs dependencies
+  "mkdocs",
+  "mkdocs-gen-files",
+  "mkdocs-git-revision-date-localized-plugin",
+  "mkdocs-include-markdown-plugin",
+  "mkdocs-literate-nav",
+  "mkdocs-material",
+  "mkdocs-static-i18n",
+  "mkdocstrings",
+  "ruff",
+]
+
+# Optional: Pyright checks that our type hints are correct
+[tool.pyright]
+extraPaths = ["src"]
+include = ["src"]
+pythonVersion = "3.12"
+reportMissingImports = "warning"
+reportPrivateUsage = "none"
+typeCheckingMode = "basic" # or "strict"
+useLibraryCodeForTypes = false # don't open libraries for types (some are on 3.14)
+venv = ".venv"
+venvPath = "."
+
+# Optional: Pytest runs basic tests to ensure code runs correctly
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+addopts = "--cov=src --cov-report=term-missing"
+
+[tool.ruff]
+exclude = [".venv", ".ruff_cache", "build", "dist", "*.egg-info", ".eggs", "__pycache__"]
+fix = true
+line-length = 100
+preview = false
+target-version = "py312"
+unsafe-fixes = false
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
+quote-style = "preserve"
+
+[tool.ruff.lint]
+extend-select = [
+  "F", # Pyflakes rules
+  "W", # PyCodeStyle warnings
+  "E", # PyCodeStyle errors
+  "I", # Sort imports properly
+  "UP", # Newer Python features
+  "C4", # Catch incorrect use of comprehensions, dict, list, etc
+  "C408", # unnecessary comprehension
+  "D", # Docstring conventions
+  "D401", # Missing argument descriptions in the docstring
+  "D417", # First line should be in imperative mood (good habit)
+  "Q", # flake8-quotes
+  "S", # Security issues
+  "C90", # McCabe complexity
+  "N", # Naming conventions
+  "B", # Bugbear
+  "A", # flake8-annotations
+  "PTH", # Use pathlib instead of os.path
+  "RET", # Good return practices
+  "SIM", # flake8-simplify
+  "TID", # flake8-tidy-imports for project conventions
+  "TCH", # flake8-type-checking for type checking imports
+]
+ignore = [
+  "E501", # line length handled by formatter
+  "D203", # 1 blank line before class docstring (conflicts with D211)
+  "D213", # Multi-line docstring summary should start at the second line
+  "S101", # assert statements (handled by bandit)
+]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+
+[tool.ruff.lint.per-file-ignores]
+"src/**/__init__.py" = ["D104"]
+"tests/**/*.py" = ["TID251", "TID252", "S101", "D"]
+"src/**/_version.py" = ["ALL"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.setuptools]
+include-package-data = true
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"confusion_matrix_explorer" = ["py.typed"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]
+fallback_version = "0.0.1"
+local_scheme = "no-local-version"
+version_file = "src/confusion_matrix_explorer/_version.py"
+version_scheme = "guess-next-dev"

@@ -1,0 +1,14 @@
+LICENSE
+README.md
+pyproject.toml
+src/confusion_matrix_explorer/__init__.py
+src/confusion_matrix_explorer/_version.py
+src/confusion_matrix_explorer/app.py
+src/confusion_matrix_explorer/py.typed
+src/confusion_matrix_explorer/utils_confusion.py
+src/confusion_matrix_explorer.egg-info/PKG-INFO
+src/confusion_matrix_explorer.egg-info/SOURCES.txt
+src/confusion_matrix_explorer.egg-info/dependency_links.txt
+src/confusion_matrix_explorer.egg-info/requires.txt
+src/confusion_matrix_explorer.egg-info/top_level.txt
+tests/test_utils_confusion.py

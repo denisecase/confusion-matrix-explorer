@@ -1,0 +1,11 @@
+# .github/dependabot.yml
+# Dependabot keeps GitHub Actions dependencies up to date monthly.
+# You can disable / delete this file if you fork the repo for limited use.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci(deps)"
