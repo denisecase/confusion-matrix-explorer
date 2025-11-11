@@ -55,9 +55,14 @@ Run the pre-commit hooks (twice, if needed):
 pre-commit run --all-files
 ```
 
-## DEV 3. Build and Preview Docs
+## DEV 3. Build and Preview The App and Documentation
+
+Use the commands below to build and copy the app to the docs/app folder for deploying via GitHub Pages. 
+Note: Building the app takes a lot of space (400 MB) in addition to the .venv install. 
 
 ```shell
+uv run shinylive export ./src/confusion_matrix_explorer ./docs/app
+uv run python -m http.server --directory docs\app --bind localhost 8008 
 uv run mkdocs build --strict
 uv run mkdocs serve
 ```
@@ -93,3 +98,28 @@ If any fail, fix issues and push again before tagging.
 git tag vx.y.z -m "x.y.z"
 git push origin vx.y.z
 ```
+
+
+## Building the ShinyLive Part for GitHub Pages
+
+This lives in ./shinylive_app/.
+
+1. Copy in utils_confusion.py
+2. Copy in app.py
+3. Edit app.py to use local imports from utils_confusion.py.
+4. Export with shinylive using the command below. 
+5. Preview locally.
+
+```shell
+uv run shinylive export ./shinylive_app ./docs/app
+uv run python -m http.server --directory docs/app --bind localhost 8008
+```
+
+Be patient, it may take a while to load. 
+
+Open the URL (usually http://127.0.0.1:8008) to verify.
+
+Once hosted:
+
+- App: <https://denisecase.github.io/confusion-matrix-explorer/app/>
+- Docs: <https://denisecase.github.io/confusion-matrix-explorer/>

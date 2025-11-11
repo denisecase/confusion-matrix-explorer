@@ -57,6 +57,7 @@ docs = [ # Add all to deptry ignores
   "mkdocs-static-i18n",
   "mkdocstrings[python]>=0.18",
   "ruff", # required for mkdocstrings
+  "shinylive", # required to host the app on GH Pages
 ]
 
 [project.urls]
@@ -114,6 +115,7 @@ known_first_party = ["confusion_matrix_explorer"]
 package_module_name_map = {PyYAML = "yaml"  }
 
 [tool.deptry.per_rule_ignores]
+DEP001 = ["utils_confusion"]
 DEP002 = [
   # Dev dependencies
   "pre-commit",
@@ -131,6 +133,7 @@ DEP002 = [
   "mkdocs-static-i18n",
   "mkdocstrings",
   "ruff",
+  "shinylive"
 ]
 
 # Optional: Pyright checks that our type hints are correct

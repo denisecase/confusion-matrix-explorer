@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: confusion-matrix-explorer
-Version: 0.0.2.dev0
+Version: 1.0.1.dev0
 Summary: Interactive tools for exploring confusion matrices and threshold effects
 Author-email: Denise Case <dcase@nwmissouri.edu>
 License-Expression: MIT
@@ -45,6 +45,7 @@ Requires-Dist: mkdocs-material; extra == "docs"
 Requires-Dist: mkdocs-static-i18n; extra == "docs"
 Requires-Dist: mkdocstrings[python]>=0.18; extra == "docs"
 Requires-Dist: ruff; extra == "docs"
+Requires-Dist: shinylive; extra == "docs"
 Dynamic: license-file
 
 # Confusion Matrix Explorer (PyShiny App)
@@ -54,59 +55,33 @@ Dynamic: license-file
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/)
 
-
 > This repo (`confusion-matrix-explorer`) contains a PyShiny app for exploring how changing a decision threshold affects a binary classifier confusion matrix and related metrics (sensitivity, specificity, precision, etc.).
 
-## Prerequisites: Set Up Machine
+## Launch the App In Your Browser
 
-- View hidden files and folders
-- View file extensions
-- Git
-- VS Code (recommended)
-- **[uv](https://github.com/astral-sh/uv)**
+Click here: [**Launch the Confusion Matrix Explorer**](./docs/app/index.html)
 
-## Fork and Clone Repository
+The app runs in your browser using **Shinylive** (Pyodide), no installation needed.
 
-1. Fork the repo.
-2. Clone your repo to your machine and open it in VS Code.
-
-Open a terminal and run the following commands.
-
-```shell
-git clone https://github.com/YOUR_USERNAME/confusion-matrix-explorer.git
-cd confusion-matrix-explorer
-```
-
-## 1. Set Up and Run
-
-- Open the repo directory in VS Code.
-- Open a terminal in VS Code.
-
-```shell
-uv python pin 3.12
-uv venv
-
-.venv\Scripts\activate # Windows
-# source .venv/bin/activate  # Mac/Linux/WSL
-
-uv sync --extra dev --extra docs --upgrade
-uv run pre-commit install
-uv run pytest -q
-uv run shiny run --reload src/confusion_matrix_explorer/app.py
-```
-
-Open browser to link provided in the terminal (or use CTRL+click to open). 
-Link is <http://127.0.0.1:8000> by default. Press CTRL+C to quit
 
 ## About the App
 
-This app demonstrates how changing the decision threshold (the vertical T line) affects the confusion matrix and related metrics (sensitivity, specificity, etc.) for a binary classification problem.
+The **Confusion Matrix Explorer** app demonstrates how changing the decision threshold (the vertical T line) affects the confusion matrix and related metrics (sensitivity, specificity, etc.) for a binary classification problem.
 
-How to Use
+How to use:
 
 - Use the sidebar upper slider to vary the decision threshold.
 - Use the sidebar lower slider to vary the number of bins in the histogram.
 - Compare the as you raise (or lower) the decision threshold.
+
+To learn more:
+
+- See [ABOUT.md](./docs/ABOUT.md).
+
+## Optional: Run on Your Machine
+
+- To run on your machine, see the [Home Page](index.md).
+- To make modifications, see [DEVELOPER.md](./docs/DEVELOPER.md)
 
 ---
 

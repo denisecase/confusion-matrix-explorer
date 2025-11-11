@@ -21,3 +21,4 @@ mkdocs-material
 mkdocs-static-i18n
 mkdocstrings[python]>=0.18
 ruff
+shinylive

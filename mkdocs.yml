@@ -70,4 +70,5 @@ markdown_extensions:
 nav:
   - Home: index.md
   - About: ABOUT.md
+  - App: app/index.md
   - Usage: DEVELOPER.md

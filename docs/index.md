@@ -2,6 +2,37 @@
 
 > This repo (`confusion-matrix-explorer`) contains a PyShiny app for exploring how changing a decision threshold affects a binary classifier confusion matrix and related metrics (sensitivity, specificity, precision, etc.).
 
+## Launch the App In Your Browser
+
+Click here: [**Launch the Confusion Matrix Explorer**](./app/index.html)
+
+The app runs in your browser using **Shinylive** (Pyodide), no installation needed.
+
+---
+
+## About the App
+
+The **Confusion Matrix Explorer** app demonstrates how changing the decision threshold (the vertical T line) affects the confusion matrix and related metrics (sensitivity, specificity, etc.) for a binary classification problem.
+
+How to use:
+
+- Use the sidebar upper slider to vary the decision threshold.
+- Use the sidebar lower slider to vary the number of bins in the histogram.
+- Compare the as you raise (or lower) the decision threshold.
+
+To learn more:
+
+- See [ABOUT.md](./ABOUT.md).
+
+--- 
+
+## Optional: Run on Your Machine
+ 
+- To run locally, follow the steps below.
+- To make modifications, see [DEVELOPER.md](./DEVELOPER.md)
+
+---
+
 ## Prerequisites: Set Up Machine
 
 - View hidden files and folders
@@ -22,7 +53,7 @@ git clone https://github.com/YOUR_USERNAME/confusion-matrix-explorer.git
 cd confusion-matrix-explorer
 ```
 
-## Dev 1. One-time setup
+## One-time setup
 
 - Open the repo directory in VS Code.
 - Open a terminal in VS Code.
@@ -38,16 +69,6 @@ uv sync --extra dev --extra docs --upgrade
 uv run pre-commit install
 uv run shiny run --reload src/confusion_matrix_explorer/app.py
 ```
-
-## About the App
-
-This app demonstrates how changing the decision threshold (the vertical T line) affects the confusion matrix and related metrics (sensitivity, specificity, etc.) for a binary classification problem.
-
-How to Use
-
-- Use the sidebar upper slider to vary the decision threshold.
-- Use the sidebar lower slider to vary the number of bins in the histogram.
-- Compare the as you raise (or lower) the decision threshold.
 
 ---
 
