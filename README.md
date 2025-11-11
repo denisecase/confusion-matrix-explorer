@@ -9,7 +9,7 @@
 
 ## Launch the App In Your Browser
 
-Click here: [**Launch the Confusion Matrix Explorer**](./docs/app/index.html)
+Click here: [**Launch the Confusion Matrix Explorer**](https://denisecase.github.io/confusion-matrix-explorer/app/)
 
 The app runs in your browser using **Shinylive** (Pyodide), no installation needed.
 

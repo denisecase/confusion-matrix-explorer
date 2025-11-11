@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: confusion-matrix-explorer
-Version: 1.0.1.dev0
+Version: 1.0.1.dev2
 Summary: Interactive tools for exploring confusion matrices and threshold effects
 Author-email: Denise Case <dcase@nwmissouri.edu>
 License-Expression: MIT
@@ -59,7 +59,7 @@ Dynamic: license-file
 
 ## Launch the App In Your Browser
 
-Click here: [**Launch the Confusion Matrix Explorer**](./docs/app/index.html)
+Click here: [**Launch the Confusion Matrix Explorer**](https://denisecase.github.io/confusion-matrix-explorer/app/)
 
 The app runs in your browser using **Shinylive** (Pyodide), no installation needed.
 
