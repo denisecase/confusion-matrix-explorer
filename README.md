@@ -42,7 +42,6 @@ uv venv
 
 uv sync --extra dev --extra docs --upgrade
 uv run pre-commit install
-uv run pytest -q
 uv run shiny run --reload src/confusion_matrix_explorer/app.py
 ```
 

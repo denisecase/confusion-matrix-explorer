@@ -18,6 +18,7 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ### Added
 - **Initial release**
+- Includes actions and hosted docs/ using MkDocs
 
 ---
 
