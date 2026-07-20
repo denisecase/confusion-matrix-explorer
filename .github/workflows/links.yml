@@ -10,8 +10,6 @@
 name: Check Links
 
 on:
-  push:
-    branches: [main]  # WHY: Validate on every push to GitHub branch `main`.
   schedule:
     - cron: "0 6 1 * *" # WHY: Runs monthly on the 1st.
   workflow_call: # WHY: Allow this workflow to be called by other workflows if needed.
