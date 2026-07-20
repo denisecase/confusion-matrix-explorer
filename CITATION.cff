@@ -1,18 +1,34 @@
-cff-version: 1.2.0
+# ============================================================
+# CITATION.cff (How to cite this project)
+# ============================================================
+
+# REQ.UNIVERSAL: Professional open projects SHOULD include this file.
+# USAGE: See https://citation-file-format.github.io/ for details.
+
+cff-version: "1.2.0"
+type: software
 message: "If you use this dataset, please cite it as below."
+
 title: "Confusion Matrix Explorer"
+version: "1.1.0"
+date-released: 2026-07-20
+license: "MIT"
+
 authors:
   - family-names: Case
     given-names: Denise
     affiliation: Northwest Missouri State University
     orcid: "0000-0001-6165-7389"
-version: "1.0.0"
-date-released: 2025-11-10
-license: "MIT"
+
 repository-code: "https://github.com/denisecase/confusion-matrix-explorer"
+url: "https://denisecase.github.io/confusion-matrix-explorer/app/"
+
 abstract: >
-  Interactive app for exploring how changing the decision threshold affects confusion matrix metrics in binary classification.
-  Built with PyShiny, Plotly, and NumPy, this tool helps users visualize the tradeoffs between sensitivity, specificity, and other diagnostic metrics in real time.
+  Interactive app for exploring how changing the decision threshold
+  affects confusion matrix metrics in binary classification.
+  Built with PyShiny, Plotly, and NumPy,
+  this tool helps users visualize the tradeoffs between
+  sensitivity, specificity, and other diagnostic metrics.
   The code is released under the MIT License.
 
 keywords:
@@ -24,14 +40,3 @@ keywords:
   - PyShiny
   - Plotly
   - NumPy
-
-preferred-citation:
-  type: software
-  authors:
-    - family-names: Case
-      given-names: Denise
-      affiliation: Northwest Missouri State University
-  title: "Confusion Matrix Explorer"
-  year: 2025
-  version: "1.0.0"
-  doi: 10.5281/zenodo.xxxxxxx  # all versions

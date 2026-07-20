@@ -30,7 +30,7 @@ cd confusion-matrix-explorer
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 # then run a single PowerShell script that does the following:
-.\py_src_chores.ps1
+.\py_src_chores_pyshiny.ps1
 ```
 
 Alternatively, run the commands one at a time:

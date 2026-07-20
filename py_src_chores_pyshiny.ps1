@@ -2,7 +2,7 @@
 
 <#
 ============================================================
-py_src_chores.ps1 (CONFUSION-MATRIX-EXPLORER ONLY)
+py_src_chores_pyshiny.ps1 (CONFUSION-MATRIX-EXPLORER ONLY)
 ============================================================
 Updated: 2026-07-20
 
@@ -10,7 +10,7 @@ Update dependencies, lint, test, and build docs.
 For Python source repos only.
 
 Run with:
-.\py_src_chores.ps1
+.\py_src_chores_pyshiny.ps1
 #>
 
 Set-StrictMode -Version Latest
