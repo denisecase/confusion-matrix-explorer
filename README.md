@@ -35,7 +35,7 @@ To learn more:
 
 ## Optional: Run on Your Machine
 
-- To run on your machine, see the [Home Page](index.md).
+- To run on your machine, see [docs/index.md](./docs/index.md)
 - To make modifications, see [DEVELOPER.md](./docs/DEVELOPER.md)
 
 ---
