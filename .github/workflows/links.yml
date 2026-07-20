@@ -10,7 +10,6 @@
 name: Check Links
 
 on:
-  pull_request: # WHY: Validates PR links before merge.
   push:
     branches: [main]  # WHY: Validate on every push to GitHub branch `main`.
   schedule:
