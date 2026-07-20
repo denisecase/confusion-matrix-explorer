@@ -1,14 +1,20 @@
-# pyproject.toml
-[build-system]
-build-backend = "setuptools.build_meta"
-requires = ["setuptools>=77", "setuptools-scm>=8"]
+# ============================================================
+# pyproject.toml (Python project configuration)
+# ============================================================
+# REQ.PYTHON: Python projects MUST include pyproject.toml as the single source of truth.
+# WHY: Centralizes project configuration.
+# CUSTOM: Update identity and build tool src folders.
+
+# ============================================================
+# SECTION 1: PROJECT IDENTITY (name, version, CUSTOM dependencies)
+# ============================================================
 
 [project]
 name = "confusion-matrix-explorer" # Package name
 dynamic = ["version"]  # Using setuptools_scm
 description = "Interactive tools for exploring confusion matrices and threshold effects"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 license = "MIT"
 authors = [
     { name="Denise Case", email="dcase@nwmissouri.edu" }
@@ -22,7 +28,7 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Scientific/Engineering :: Visualization",
   "Topic :: Education",
   "Typing :: Typed",
@@ -36,27 +42,23 @@ dependencies = [
   "plotly",
   "numpy",
   "shiny",
-  "shinywidgets"          
+  "shinywidgets"
 ]
 
 [project.optional-dependencies]
-dev = [ # Add all to deptry ignores
+dev = [
   "pre-commit",
+  "pyright",
   "pytest",
   "pytest-cov",
   "pytest-env",
+  "ruff",
   "validate-pyproject",
 ]
-docs = [ # Add all to deptry ignores
-  "mkdocs",
-  "mkdocs-gen-files",
-  "mkdocs-git-revision-date-localized-plugin",
-  "mkdocs-include-markdown-plugin",
-  "mkdocs-literate-nav",
-  "mkdocs-material",
-  "mkdocs-static-i18n",
-  "mkdocstrings[python]>=0.18",
-  "ruff", # required for mkdocstrings
+docs = [
+    # WHY: Only needed for building documentation, not required for running the package.
+  "mkdocstrings-python", # automatic API documentation from docstrings
+  "zensical", # fast and minimal static site generator for documentation
   "shinylive", # required to host the app on GH Pages
 ]
 
@@ -110,104 +112,157 @@ source = ["src"]
 [tool.coverage.xml]
 output = "coverage.xml"
 
-[tool.deptry]
-known_first_party = ["confusion_matrix_explorer"]
-package_module_name_map = {PyYAML = "yaml"  }
+# ============================================================
+# SECTION 2: TOOL CONFIGURATION (Professional basics)
+# ============================================================
 
-[tool.deptry.per_rule_ignores]
-DEP001 = ["utils_confusion"]
-DEP002 = [
-  # Dev dependencies
-  "pre-commit",
-  "pytest",
-  "pytest-cov",
-  "pytest-env",
-  "validate-pyproject",
-  # Docs dependencies
-  "mkdocs",
-  "mkdocs-gen-files",
-  "mkdocs-git-revision-date-localized-plugin",
-  "mkdocs-include-markdown-plugin",
-  "mkdocs-literate-nav",
-  "mkdocs-material",
-  "mkdocs-static-i18n",
-  "mkdocstrings",
-  "ruff",
-  "shinylive"
+# === PYRIGHT: COURSE REPOSITORIES ===
+
+[tool.pyright]
+# WHY: "basic" catches bugs such as undefined names, bad imports, obvious
+# mismatches without being too demanding.
+typeCheckingMode = "basic"
+
+# WHY: Check package source and tests, nothing else.
+include = ["src", "tests"]
+
+# WHY: Resolve import package from src/ even before an editable install,
+# so a src layout doesn't produce a false "import could not be resolved".
+extraPaths = ["src"]
+
+# WHY: Keep known folders that are generated, cached, virtualenv,
+# build, and documentation site output out of type-check scope.
+# Same as Ruff exclude list.
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    ".venv",
+    "build",
+    "dist",
+    "site",
+    "*.egg-info",
 ]
 
-# Optional: Pyright checks that our type hints are correct
-[tool.pyright]
-extraPaths = ["src"]
-include = ["src"]
-pythonVersion = "3.12"
-reportMissingImports = "warning"
-reportPrivateUsage = "none"
-typeCheckingMode = "basic" # or "strict"
-useLibraryCodeForTypes = false # don't open libraries for types (some are on 3.14)
-venv = ".venv"
-venvPath = "."
+# WHY: Match the course Python target so version-specific inference is correct.
+pythonVersion = "3.14"
 
-# Optional: Pytest runs basic tests to ensure code runs correctly
+# === PYTEST (VERIFY LOGIC) ===
+
 [tool.pytest.ini_options]
-minversion = "7.0"
+# WHY: Ensure tests are discoverable and coverage is visible.
+minversion = "9.0"
 testpaths = ["tests"]
-addopts = "--cov=src --cov-report=term-missing"
+addopts = " --cov=src --cov-report=term-missing"
+
+# === RUFF: RESEARCH / PACKAGE / INFRASTRUCTURE REPOSITORIES ===
 
 [tool.ruff]
-exclude = [".venv", ".ruff_cache", "build", "dist", "*.egg-info", ".eggs", "__pycache__"]
-fix = true
-line-length = 100
+# WHY: Use one fast tool for Python linting and formatting across maintained repos.
+# WHY: Keep generated, cached, virtualenv, build, and docs-site output out of lint scope.
+exclude = [
+    ".eggs",
+    "*.egg-info",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "site",
+]
+
+# WHY: Match Black/Ruff formatter default; keeps diffs compact and predictable.
+line-length = 88
+
+# WHY: Avoid unstable preview behavior unless a repo intentionally opts in.
 preview = false
-target-version = "py312"
+
+# WHY: Match the current repo target; modernization rules should track the supported runtime.
+target-version = "py314"
+
+# WHY: Do not apply fixes Ruff marks unsafe in shared/release-oriented repos.
 unsafe-fixes = false
 
+
 [tool.ruff.format]
-docstring-code-format = true
-line-ending = "lf"
+# WHY: Spaces are the Python standard and match formatter defaults.
+indent-style = "space"
+
+# WHY: Preserve platform-appropriate line endings across Windows/macOS/Linux contributors.
+line-ending = "auto"
+
+# WHY: Preserve existing quote style to minimize meaningless diff churn.
 quote-style = "preserve"
 
+
 [tool.ruff.lint]
-extend-select = [
-  "F", # Pyflakes rules
-  "W", # PyCodeStyle warnings
-  "E", # PyCodeStyle errors
-  "I", # Sort imports properly
-  "UP", # Newer Python features
-  "C4", # Catch incorrect use of comprehensions, dict, list, etc
-  "C408", # unnecessary comprehension
-  "D", # Docstring conventions
-  "D401", # Missing argument descriptions in the docstring
-  "D417", # First line should be in imperative mood (good habit)
-  "Q", # flake8-quotes
-  "S", # Security issues
-  "C90", # McCabe complexity
-  "N", # Naming conventions
-  "B", # Bugbear
-  "A", # flake8-annotations
-  "PTH", # Use pathlib instead of os.path
-  "RET", # Good return practices
-  "SIM", # flake8-simplify
-  "TID", # flake8-tidy-imports for project conventions
-  "TCH", # flake8-type-checking for type checking imports
+# WHY: Professional baseline for research, package, and infrastructure code.
+# WHY: Catch correctness issues, import disorder, modernization drift, bug patterns,
+# WHY: path handling problems, avoidable complexity, weak return flow, doc gaps,
+# WHY: and obvious security hazards.
+select = [
+    "E",   # WHY: Basic syntax and structural correctness.
+    "F",   # WHY: Undefined names, unused imports, and likely real errors.
+    "W",   # WHY: Warnings that catch easy issues early.
+    "I",   # WHY: Deterministic import ordering for stable diffs.
+    "UP",  # WHY: Modern Python constructs for the pinned Python version.
+    "B",   # WHY: Common bug patterns.
+
+    "PTH", # WHY: Prefer pathlib for cross-platform path handling.
+    "C4",  # WHY: Comprehension correctness and clarity.
+    "SIM", # WHY: Remove obvious unnecessary complexity.
+    "RET", # WHY: Keep return behavior explicit and readable.
+
+    "D",   # WHY: Public/reusable code needs docstrings.
+    "S",   # WHY: Catch obvious security hazards before release or reuse.
 ]
+
 ignore = [
-  "E501", # line length handled by formatter
-  "D203", # 1 blank line before class docstring (conflicts with D211)
-  "D213", # Multi-line docstring summary should start at the second line
-  "S101", # assert statements (handled by bandit)
+    "E501", # WHY: Line length is handled by the formatter, not Ruff lint.
+    "D203", # WHY: Conflicts with D211; use the no-blank-line convention.
+    "D213", # WHY: Conflicts with D212; use first-line summary convention.
+    "S101", # WHY: Allow assert for tests and intentional internal invariants.
 ]
+
 
 [tool.ruff.lint.isort]
+# WHY: Ordered imports keep reviews and generated diffs readable.
 force-sort-within-sections = true
 
+
 [tool.ruff.lint.per-file-ignores]
-"src/**/__init__.py" = ["D104"]
-"tests/**/*.py" = ["TID251", "TID252", "S101", "D"]
+# WHY: Package __init__ files often re-export public API names.
+"src/**/__init__.py" = ["F401"]
+
+# WHY: Generated/version files are build metadata, not authored implementation.
 "src/**/_version.py" = ["ALL"]
 
+# WHY: Tests prioritize behavior clarity over public API documentation.
+# WHY: B011/B018 may be acceptable in tests depending on the assertion pattern.
+# WHY: S101 is retained here even though it is also globally ignored.
+"tests/**/*.py" = ["D", "B018", "B011", "S101"]
+
+# WHY: Marker files are intentionally empty/non-Python content.
+"src/**/py.typed" = ["ALL"]
+
+
 [tool.ruff.lint.pydocstyle]
+# WHY: Google style is the project-wide docstring convention.
 convention = "google"
+
+# ============================================================
+# SECTION 3: BUILD SYSTEM (boilerplate; CUSTOM src/ agreement)
+# ============================================================
+#
+# REQ.PROJECT: A build system MUST be declared for package discovery and publishing.
+# REQ.STRUCTURE: All importable code MUST live under src/.
+# WHY src/ layout: Prevents accidental imports from the repo root;
+#     ensures consistent behavior across IDEs, tests, CI, and PyPI.
+
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=77", "setuptools-scm>=8"]
 
 [tool.setuptools]
 include-package-data = true

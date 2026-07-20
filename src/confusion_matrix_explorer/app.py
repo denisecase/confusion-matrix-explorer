@@ -11,7 +11,7 @@ from shiny.express import input as shiny_input
 from shiny.express import ui
 from shinywidgets import render_plotly
 
-from confusion_matrix_explorer.utils_confusion import (
+from .utils_confusion import (
     ConfusionCounts,
     ConfusionMetrics,
     compute_confusion_counts,
@@ -35,6 +35,9 @@ BASE_DF: pd.DataFrame = generate_synthetic_scores(
     random_state=42,
 )
 
+SCORE_VALUES = BASE_DF["score"].to_numpy(
+    dtype=np.float64
+)  # new July 2026 for pyright type checking
 
 # -----------------------------
 # UI
@@ -59,9 +62,9 @@ with ui.sidebar():
     ui.input_slider(
         "threshold",
         "Decision threshold (raise the bar)",
-        min=float(BASE_DF["score"].min()),
-        max=float(BASE_DF["score"].max()),
-        value=float(BASE_DF["score"].mean()),
+        min=float(SCORE_VALUES.min()),
+        max=float(SCORE_VALUES.max()),
+        value=float(SCORE_VALUES.mean()),
         step=0.1,
     )
 
@@ -146,7 +149,12 @@ with ui.layout_columns(col_widths=(6, 6)):
                     "xanchor": "center",
                     "yanchor": "top",
                 },
-                margin={"t": 80, "b": 40, "l": 40, "r": 40},  # add top/bottom/side margins
+                margin={
+                    "t": 80,
+                    "b": 40,
+                    "l": 40,
+                    "r": 40,
+                },  # add top/bottom/side margins
                 legend={
                     "orientation": "h",
                     "yanchor": "bottom",
@@ -254,7 +262,9 @@ with ui.card():
                         "showarrow": False,
                         "font": {
                             "size": 16,
-                            "color": "white" if matrix[i][j] > matrix.max() / 2 else "black",
+                            "color": "white"
+                            if matrix[i][j] > matrix.max() / 2
+                            else "black",
                         },
                     }
                 )
@@ -291,9 +301,27 @@ with ui.card():
 
         # Prepare data
         data = [
-            {"x": "Pred Neg", "y": "Act Neg", "count": counts.tn, "label": "TN", "color": "green"},
-            {"x": "Pred Pos", "y": "Act Neg", "count": counts.fp, "label": "FP", "color": "red"},
-            {"x": "Pred Neg", "y": "Act Pos", "count": counts.fn, "label": "FN", "color": "orange"},
+            {
+                "x": "Pred Neg",
+                "y": "Act Neg",
+                "count": counts.tn,
+                "label": "TN",
+                "color": "green",
+            },
+            {
+                "x": "Pred Pos",
+                "y": "Act Neg",
+                "count": counts.fp,
+                "label": "FP",
+                "color": "red",
+            },
+            {
+                "x": "Pred Neg",
+                "y": "Act Pos",
+                "count": counts.fn,
+                "label": "FN",
+                "color": "orange",
+            },
             {
                 "x": "Pred Pos",
                 "y": "Act Pos",
@@ -457,10 +485,20 @@ with ui.card():
 
         # Add grid lines
         fig.add_shape(
-            type="line", x0=-0.5, x1=1.5, y0=0.5, y1=0.5, line={"color": "gray", "width": 1}
+            type="line",
+            x0=-0.5,
+            x1=1.5,
+            y0=0.5,
+            y1=0.5,
+            line={"color": "gray", "width": 1},
         )
         fig.add_shape(
-            type="line", x0=0.5, x1=0.5, y0=-0.5, y1=1.5, line={"color": "gray", "width": 1}
+            type="line",
+            x0=0.5,
+            x1=0.5,
+            y0=-0.5,
+            y1=1.5,
+            line={"color": "gray", "width": 1},
         )
 
         return fig
@@ -493,7 +531,10 @@ with ui.card():
 
         # Create grid data
         categories = (
-            ["TP"] * scaled_tp + ["TN"] * scaled_tn + ["FP"] * scaled_fp + ["FN"] * scaled_fn
+            ["TP"] * scaled_tp
+            + ["TN"] * scaled_tn
+            + ["FP"] * scaled_fp
+            + ["FN"] * scaled_fn
         )
 
         # Shuffle for better visualization (optional)
@@ -513,7 +554,12 @@ with ui.card():
             x="x",
             y="y",
             color="category",
-            color_discrete_map={"TP": "#2ca02c", "TN": "#1f77b4", "FP": "#d62728", "FN": "#ff7f0e"},
+            color_discrete_map={
+                "TP": "#2ca02c",
+                "TN": "#1f77b4",
+                "FP": "#d62728",
+                "FN": "#ff7f0e",
+            },
             hover_data={"category": True},
         )
 

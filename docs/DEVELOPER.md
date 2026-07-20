@@ -26,14 +26,29 @@ cd confusion-matrix-explorer
 - Open a terminal in VS Code.
 
 ```shell
-uv python pin 3.12
-uv venv
+# if newly downloaded from GitHub you may need to give permission:
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
-.venv\Scripts\activate # Windows
-# source .venv/bin/activate  # Mac/Linux/WSL
+# then run a single PowerShell script that does the following:
+.\py_src_chores.ps1
+```
 
+Alternatively, run the commands one at a time:
+
+```shell
+uv self update
+uv python pin 3.14
+uv lock --upgrade
 uv sync --extra dev --extra docs --upgrade
-uv run pre-commit install
+
+uvx pre-commit install
+uvx pre-commit autoupdate
+
+git add -A
+uvx pre-commit run --all-files
+# rerun if changes
+uvx pre-commit run --all-files
+
 uv run shiny run --reload src/confusion_matrix_explorer/app.py
 ```
 
@@ -41,42 +56,53 @@ uv run shiny run --reload src/confusion_matrix_explorer/app.py
 
 ```shell
 git pull origin main
-uvx pre-commit autoupdate
 git add .
-uvx ruff check . --fix
-uvx ruff format .
-uvx deptry .
+
+uv run ruff check . --fix
+uv run ruff format .
 uv run pytest
-```
 
-Run the pre-commit hooks (twice, if needed):
-
-```shell
-pre-commit run --all-files
+git add -A
 ```
 
 ## DEV 3. Build and Preview The App and Documentation
 
-Use the commands below to build and copy the app to the docs/app folder for deploying via GitHub Pages. 
-Note: Building the app takes a lot of space (400 MB) in addition to the .venv install. 
+Use the commands below to:
+
+1. Delete any existing `docs/app` directory.
+2. Export the Shinylive app to `docs/app`.
+3. Build the complete documentation site.
+4. Preview the documentation site locally.
+
+Note: Building the app takes a lot of space (400 MB) in addition to the .venv install.
 
 ```shell
+uv run python -c "import shutil; shutil.rmtree('docs/app', ignore_errors=True)"
+
 uv run shinylive export ./src/confusion_matrix_explorer ./docs/app
-uv run python -m http.server --directory docs\app --bind localhost 8008 
-uv run mkdocs build --strict
-uv run mkdocs serve
+
+uv run zensical build
+
+uv run python -m http.server 8008 --bind 127.0.0.1 --directory docs/app
 ```
 
-Verify local API docs at: <http://localhost:8000>
-When done reviewing, use CTRL c or CMD c to quit.
+Verify local API docs at: <http://127.0.0.1:8008/>.
 
-## DEV 4. Test
+It should **Launch the Confusion Matrix Explorer**.
+
+It may take a while to open (lots of code to make it work).
+
+## Stop The App
+
+When done reviewing, use **CTRL c** or **CMD c** (possibly a couple times) to quit.
+
+## DEV 4. After Making Any Changes: Test
 
 Update `CHANGELOG.md` and `pyproject`.toml dependencies.
 Ensure CI passes.
 
 ```shell
-git add .
+git add -A
 uv run pre-commit run --all-files
 uv run pytest -q
 ```
@@ -99,7 +125,6 @@ git tag vx.y.z -m "x.y.z"
 git push origin vx.y.z
 ```
 
-
 ## Building the ShinyLive Part for GitHub Pages
 
 This lives in ./shinylive_app/.
@@ -107,7 +132,7 @@ This lives in ./shinylive_app/.
 1. Copy in utils_confusion.py
 2. Copy in app.py
 3. Edit app.py to use local imports from utils_confusion.py.
-4. Export with shinylive using the command below. 
+4. Export with shinylive using the command below.
 5. Preview locally.
 
 ```shell
@@ -115,9 +140,9 @@ uv run shinylive export ./shinylive_app ./docs/app
 uv run python -m http.server --directory docs/app --bind localhost 8008
 ```
 
-Be patient, it may take a while to load. 
+Be patient, it may take a while to load.
 
-Open the URL (usually http://127.0.0.1:8008) to verify.
+Open the URL (usually <http://127.0.0.1:8008>) to verify.
 
 Once hosted:
 

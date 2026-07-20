@@ -1,6 +1,9 @@
 # Confusion Matrix Explorer (PyShiny App)
 
-> This repo (`confusion-matrix-explorer`) contains a PyShiny app for exploring how changing a decision threshold affects a binary classifier confusion matrix and related metrics (sensitivity, specificity, precision, etc.).
+> This repo (`confusion-matrix-explorer`) contains
+> a PyShiny app for exploring how changing a
+> decision threshold affects a binary classifier confusion matrix
+> and related metrics (sensitivity, specificity, precision, etc.).
 
 ## Launch the App In Your Browser
 
@@ -12,7 +15,11 @@ The app runs in your browser using **Shinylive** (Pyodide), no installation need
 
 ## About the App
 
-The **Confusion Matrix Explorer** app demonstrates how changing the decision threshold (the vertical T line) affects the confusion matrix and related metrics (sensitivity, specificity, etc.) for a binary classification problem.
+The **Confusion Matrix Explorer** app demonstrates
+how changing the decision threshold (the vertical T line)
+affects the confusion matrix and related metrics
+(sensitivity, specificity, etc.)
+for a binary classification problem.
 
 How to use:
 
@@ -24,10 +31,10 @@ To learn more:
 
 - See [ABOUT.md](./ABOUT.md).
 
---- 
+---
 
 ## Optional: Run on Your Machine
- 
+
 - To run locally, follow the steps below.
 - To make modifications, see [DEVELOPER.md](./DEVELOPER.md)
 
@@ -59,7 +66,7 @@ cd confusion-matrix-explorer
 - Open a terminal in VS Code.
 
 ```shell
-uv python pin 3.12
+uv python pin 3.14
 uv venv
 
 .venv\Scripts\activate # Windows

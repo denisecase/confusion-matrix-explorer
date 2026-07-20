@@ -45,7 +45,7 @@ jobs:
           enable-cache: true
 
       - name: A3) Pin Python version for consistency
-        run:  uv python pin 3.12
+        run:  uv python pin 3.14
 
       - name: A4) Sync to install dependencies
         run: uv sync --extra dev --extra docs --upgrade
